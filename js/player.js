@@ -1,9 +1,11 @@
 // Global variables
 let player = null;
 let currentUrl = '';
+let autoplayEnhancer = null;
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    autoplayEnhancer = new AutoplayEnhancer();
     initializePlayer();
     setupEventListeners();
     checkUrlParameters();
@@ -14,15 +16,25 @@ function checkUrlParameters() {
     const urlParams = new URLSearchParams(window.location.search);
     const linkParam = urlParams.get('link');
     const unmuteParam = urlParams.get('unmute');
+    const autoplayParam = urlParams.get('autoplay');
     const video = document.getElementById('videoPlayer');
     
-    // Handle unmute parameter
-    if (unmuteParam === 'true') {
+    // Handle unmute parameter (but let AutoplayEnhancer handle it during autoplay)
+    if (unmuteParam === 'true' && autoplayParam !== 'true') {
         video.muted = false;
         console.log('Video unmuted via URL parameter');
-    } else if (unmuteParam === 'false') {
+    } else if (unmuteParam === 'false' && autoplayParam !== 'true') {
         video.muted = true;
         console.log('Video muted via URL parameter');
+    }
+    
+    // Handle autoplay parameter for HTML attribute (fallback)
+    if (autoplayParam === 'true') {
+        video.autoplay = true;
+        console.log('Video autoplay attribute set via URL parameter');
+    } else if (autoplayParam === 'false') {
+        video.autoplay = false;
+        console.log('Video autoplay attribute disabled via URL parameter');
     }
     
     // Handle link parameter
@@ -155,6 +167,14 @@ function onStreamInitialized(e) {
     
     // Get available qualities
     updateQualityInfo();
+    
+    // Use enhanced autoplay system
+    const urlParams = new URLSearchParams(window.location.search);
+    const video = document.getElementById('videoPlayer');
+    
+    if (autoplayEnhancer) {
+        autoplayEnhancer.onStreamReady(video, urlParams);
+    }
 }
 
 function onPlaybackStarted(e) {
