@@ -172,7 +172,8 @@ function onMetricChanged(e) {
 }
 
 function updateStatus(status) {
-    document.getElementById('status').textContent = status;
+    // Video info section removed - no longer updating status
+    console.log('Status:', status);
 }
 
 function updateQualityInfo() {
@@ -185,8 +186,8 @@ function updateQualityInfo() {
         
         if (videoTrack && bitrateInfo && bitrateInfo[currentQuality]) {
             const quality = bitrateInfo[currentQuality];
-            document.getElementById('quality').textContent = `${quality.width}x${quality.height}`;
-            document.getElementById('bitrate').textContent = `${Math.round(quality.bitrate / 1000)} kbps`;
+            console.log('Quality:', `${quality.width}x${quality.height}`);
+            console.log('Bitrate:', `${Math.round(quality.bitrate / 1000)} kbps`);
         }
     } catch (error) {
         console.warn('Could not update quality info:', error);
@@ -199,7 +200,7 @@ function updateBufferInfo() {
     try {
         const bufferLevel = player.getDashMetrics().getCurrentBufferLevel('video');
         if (bufferLevel !== null) {
-            document.getElementById('buffer').textContent = `${bufferLevel.toFixed(1)}s`;
+            console.log('Buffer:', `${bufferLevel.toFixed(1)}s`);
         }
     } catch (error) {
         console.warn('Could not update buffer info:', error);
@@ -207,11 +208,13 @@ function updateBufferInfo() {
 }
 
 function showVideoInfo() {
-    document.getElementById('videoInfo').style.display = 'block';
+    // Video info section removed - no longer showing info panel
+    console.log('Video info would be shown here');
 }
 
 function hideVideoInfo() {
-    document.getElementById('videoInfo').style.display = 'none';
+    // Video info section removed - no longer hiding info panel
+    console.log('Video info would be hidden here');
 }
 
 function showError(message) {
