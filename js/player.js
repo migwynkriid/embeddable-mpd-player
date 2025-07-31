@@ -13,25 +13,19 @@ document.addEventListener('DOMContentLoaded', function() {
 function checkUrlParameters() {
     const urlParams = new URLSearchParams(window.location.search);
     const linkParam = urlParams.get('link');
+    const unmuteParam = urlParams.get('unmute');
+    const video = document.getElementById('videoPlayer');
     
-    if (linkParam) {
-        const urlInput = document.getElementById('mpdUrl');
-        urlInput.value = linkParam;
-        
-        // Validate and load the video automatically
-        if (isValidUrl(linkParam)) {
-            loadVideo();
-        } else {
-            showError('Invalid MPD URL provided in link parameter');
-        }
+    // Handle unmute parameter
+    if (unmuteParam === 'true') {
+        video.muted = false;
+        console.log('Video unmuted via URL parameter');
+    } else if (unmuteParam === 'false') {
+        video.muted = true;
+        console.log('Video muted via URL parameter');
     }
-}
-
-// Check for URL parameters and auto-load if link parameter is present
-function checkUrlParameters() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const linkParam = urlParams.get('link');
     
+    // Handle link parameter
     if (linkParam) {
         const urlInput = document.getElementById('mpdUrl');
         urlInput.value = linkParam;
