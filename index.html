@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embeddable MPD Player</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎬 MPD Player</h1>
+            <p>Enter an MPD URL to stream DASH content directly in your browser</p>
+        </header>
+        
+        <main>
+            <div class="input-section">
+                <div class="url-input-group">
+                    <input type="url" id="mpdUrl" placeholder="Enter MPD URL (e.g., https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd)" required>
+                    <button id="loadBtn" onclick="loadVideo()">Load Video</button>
+                </div>
+                
+                <div class="sample-urls">
+                    <h3>Sample MPD URLs:</h3>
+                    <div class="sample-buttons">
+                        <button class="sample-btn" onclick="loadSample('https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd')">Big Buck Bunny</button>
+                        <button class="sample-btn" onclick="loadSample('https://bitmovin-a.akamaihd.net/content/sintel/sintel.mpd')">Sintel</button>
+                        <button class="sample-btn" onclick="loadSample('https://dash.akamaized.net/envivio/EnvivioDash3/manifest.mpd')">Envivio</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="video-section">
+                <div class="video-container">
+                    <video id="videoPlayer" controls preload="none" poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450' viewBox='0 0 800 450'%3E%3Crect width='800' height='450' fill='%23f0f0f0'/%3E%3Ctext x='400' y='225' text-anchor='middle' font-family='Arial' font-size='24' fill='%23666'%3ELoad an MPD file to start playing%3C/text%3E%3C/svg%3E">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                
+                <div class="video-info" id="videoInfo" style="display: none;">
+                    <h3>Video Information</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="label">Status:</span>
+                            <span id="status">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Quality:</span>
+                            <span id="quality">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Bitrate:</span>
+                            <span id="bitrate">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Buffer:</span>
+                            <span id="buffer">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="error-section" id="errorSection" style="display: none;">
+                <div class="error-message">
+                    <h3>⚠️ Error</h3>
+                    <p id="errorText"></p>
+                    <button onclick="clearError()">Dismiss</button>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Built with <a href="https://github.com/Dash-Industry-Forum/dash.js" target="_blank">DASH.js</a> | 
+            <a href="https://github.com/yourusername/embeddable-mpd-player" target="_blank">View Source</a></p>
+        </footer>
+    </div>
+    
+    <script src="js/player.js"></script>
+</body>
+</html>
