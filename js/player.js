@@ -6,7 +6,26 @@ let currentUrl = '';
 document.addEventListener('DOMContentLoaded', function() {
     initializePlayer();
     setupEventListeners();
+    checkUrlParameters();
 });
+
+// Check for URL parameters and auto-load if link parameter is present
+function checkUrlParameters() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const linkParam = urlParams.get('link');
+    
+    if (linkParam) {
+        const urlInput = document.getElementById('mpdUrl');
+        urlInput.value = linkParam;
+        
+        // Validate and load the video automatically
+        if (isValidUrl(linkParam)) {
+            loadVideo();
+        } else {
+            showError('Invalid MPD URL provided in link parameter');
+        }
+    }
+}
 
 function initializePlayer() {
     const video = document.getElementById('videoPlayer');
